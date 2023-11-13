@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/ParallaxBackground.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Background.png" type="Texture" id=2]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+script = ExtResource( 1 )
+ScrollingSpeed = -100.0
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2( 1024, 600 )
+
+[node name="Background" type="Sprite" parent="ParallaxLayer"]
+position = Vector2( 515.125, 300.5 )
+scale = Vector2( 0.37619, 0.289551 )
+texture = ExtResource( 2 )
