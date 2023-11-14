@@ -51,6 +51,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
+bulletPoolSize = 4
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )

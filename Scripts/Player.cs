@@ -2,9 +2,8 @@ using Godot;
 using System;
 
 public class Player : BaseEntity {
-    const int BULLET_POOL_SIZE = 5;
-
     [Export]
+    public int bulletPoolSize = 5;
     public float timeBetweenBullets = 0.2F;
     private Boolean scaling = false;
     private Vector2 velocity = new Vector2(0.0F, 0.0F);
@@ -22,8 +21,8 @@ public class Player : BaseEntity {
         Node bulletTemplate = GetNode<Bullet>("Bullet");
         // Create the bullets
         GD.Print("Creating bullets");
-        this.bullets = new Bullet[BULLET_POOL_SIZE];
-        for (int b = 0; b < BULLET_POOL_SIZE; b++){
+        this.bullets = new Bullet[bulletPoolSize];
+        for (int b = 0; b < bulletPoolSize; b++){
             bullets[b] = (Bullet) bulletTemplate.Duplicate();
             GetParent().CallDeferred("add_child", bullets[b]);
         }
@@ -77,7 +76,7 @@ public class Player : BaseEntity {
     private bool Shoot(){
         int baseSize = 64; //TO-DO: Make a constant or get from sprite size
         // Find a bullet that is inactive
-        for (int b = 0; b < BULLET_POOL_SIZE; b++) {
+        for (int b = 0; b < this.bullets.Length; b++) {
             Bullet bullet = this.bullets[b];
             if (bullet.IsAlive() == false){
                 bullet.Spawn(this.Position.x + baseSize/2*this.Scale.x, this.Position.y);
