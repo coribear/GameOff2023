@@ -1,1 +1,5 @@
 .mono/metadata
+.mono/assemblies
+.mono/temp
+.import
+.vs

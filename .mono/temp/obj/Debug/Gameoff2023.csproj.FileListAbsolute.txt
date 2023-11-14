@@ -1,9 +1,0 @@
-C:\Users\corib\OneDrive\Documents\Godot\Gameoff2023\.mono\temp\obj\Debug\Gameoff2023.csproj.AssemblyReference.cache
-C:\Users\corib\OneDrive\Documents\Godot\Gameoff2023\.mono\temp\obj\Debug\Gameoff2023.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\corib\OneDrive\Documents\Godot\Gameoff2023\.mono\temp\obj\Debug\Gameoff2023.AssemblyInfoInputs.cache
-C:\Users\corib\OneDrive\Documents\Godot\Gameoff2023\.mono\temp\obj\Debug\Gameoff2023.AssemblyInfo.cs
-C:\Users\corib\OneDrive\Documents\Godot\Gameoff2023\.mono\temp\obj\Debug\Gameoff2023.csproj.CoreCompileInputs.cache
-C:\Users\corib\OneDrive\Documents\Godot\Gameoff2023\.mono\temp\bin\Debug\Gameoff2023.dll
-C:\Users\corib\OneDrive\Documents\Godot\Gameoff2023\.mono\temp\bin\Debug\Gameoff2023.pdb
-C:\Users\corib\OneDrive\Documents\Godot\Gameoff2023\.mono\temp\obj\Debug\Gameoff2023.dll
-C:\Users\corib\OneDrive\Documents\Godot\Gameoff2023\.mono\temp\obj\Debug\Gameoff2023.pdb
