@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class BaseEntity : Area2D {
+public class BaseEntity : KinematicBody2D {
     const float NORMAL_SIZE = 1.0F;
     private float currentScale = 1.0F;
 
@@ -41,5 +41,14 @@ public class BaseEntity : Area2D {
             this.currentScale = this.smallSize;
         }
         SetScale(currentScale);
+    }
+
+
+    public void GotHitByBullet(Bullet bullet){
+        if (bullet.GetBulletType() == Bullet.BulletTypeEnum.GROWER) {
+            this.Grow();
+        } else {
+            this.Shrink();
+        }
     }
 }

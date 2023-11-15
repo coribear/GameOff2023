@@ -57,8 +57,9 @@ public class Player : BaseEntity {
 
         this.timeSinceLastBullet += delta;
         // Shoot
-        if (Input.IsActionPressed("shoot") && this.timeSinceLastBullet > this.timeBetweenBullets) {
-            if (Shoot() == true) this.timeSinceLastBullet = 0.0F;
+        if (this.timeSinceLastBullet > this.timeBetweenBullets) {
+            if (Input.IsActionPressed("shoot_1") && Shoot(Bullet.BulletTypeEnum.GROWER) == true) this.timeSinceLastBullet = 0.0F;
+            if (Input.IsActionPressed("shoot_2") && Shoot(Bullet.BulletTypeEnum.SHRINKER) == true) this.timeSinceLastBullet = 0.0F;
         }
 
         // Test
@@ -73,14 +74,14 @@ public class Player : BaseEntity {
         }
     }
 
-    private bool Shoot(){
+    private bool Shoot(Bullet.BulletTypeEnum bulletType){
         int baseSize = 64; //TO-DO: Make a constant or get from sprite size
         // Find a bullet that is inactive
         for (int b = 0; b < this.bullets.Length; b++) {
             Bullet bullet = this.bullets[b];
             if (bullet.IsAlive() == false){
-                bullet.Spawn(this.Position.x + baseSize/2*this.Scale.x, this.Position.y);
-                GD.Print("pew");
+                bullet.Spawn(bulletType, this.Position.x + baseSize/2*this.Scale.x, this.Position.y);
+                GD.Print("pew (" + bulletType.ToString() + ")");
                 return true;
             }
         }

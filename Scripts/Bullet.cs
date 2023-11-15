@@ -2,14 +2,19 @@ using Godot;
 using System;
 
 public class Bullet : Area2D {
+    public enum BulletTypeEnum{
+        GROWER,
+        SHRINKER
+    };
+
     [Export]
-    float speed = 20.0F;
+    public float speed = 20.0F;
 
     [Signal]
     public delegate void Hit();
 
     private bool alive = false;
-
+    private BulletTypeEnum bulletType = BulletTypeEnum.GROWER; 
     // Declare member variables here. Examples:
     // private int a = 2;
     // private string b = "text";
@@ -25,6 +30,11 @@ public class Bullet : Area2D {
         SetAlive(true);
     }
 
+    public void Spawn(BulletTypeEnum bulletType, float x, float y){
+        this.bulletType = bulletType;
+        Spawn(x, y);
+    }
+
     private void SetAlive(bool flag){
         this.alive = flag;
         this.Visible = this.alive;
@@ -34,6 +44,9 @@ public class Bullet : Area2D {
         return this.alive;
     }
 
+    public BulletTypeEnum GetBulletType(){
+        return this.bulletType;
+    }
     public override void _Process(float delta){
         if (this.IsAlive()){
             this.Position = new Vector2(this.Position.x + this.speed, this.Position.y);
@@ -42,6 +55,21 @@ public class Bullet : Area2D {
                 GD.Print("bullet out of sight");
                 SetAlive(false);
             }
+        }
+    }
+
+    public void OnBulletBodyEntered(PhysicsBody2D body) {
+        if (this.alive) {
+            GD.Print("Bullet collided!");
+            GD.Print(body.GetType());
+            // Try to cast it as a BaseEntity
+            BaseEntity bodyAsEntity = body as BaseEntity;
+            if (bodyAsEntity != null){
+                GD.Print("Invoking hit event");
+                bodyAsEntity.GotHitByBullet(this);
+            }
+            SetAlive(false);
+            EmitSignal(nameof(Hit));
         }
     }
 }
