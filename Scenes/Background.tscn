@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scenes/ParallaxBackground.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/ParallaxBackground.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Background.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Rock.tscn" type="PackedScene" id=3]
 
