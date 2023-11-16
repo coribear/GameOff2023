@@ -13,7 +13,6 @@ public class BaseEntity : KinematicBody2D {
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready() {
-        
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,5 +49,27 @@ public class BaseEntity : KinematicBody2D {
         } else {
             this.Shrink();
         }
+        // Invoke "setPosition" that checks for collisions
+        SetPosition(this.Position.x, this.Position.y);
+    }
+
+    public void SetPosition(float x, float y) {
+        Vector2 newPos = new Vector2(x, y);
+        KinematicCollision2D collision = MoveAndCollide(newPos);
+        this.Position = newPos;
+        if (collision != null) OnCollision(collision.GetCollider());
+    }
+    public void OnCollision(Godot.Object body) {
+        GD.Print("collision with " + body.GetType());
+        Bullet objectAsBullet = body as Bullet;
+        if (objectAsBullet == null){
+            GD.Print("-- Object was not a bullet. Self-destroying");
+            // Collisions with anything (except bullets, ironically) = death
+            GetParent().RemoveChild(this);
+            QueueFree();
+        }else{
+            GD.Print("Object was bullet");
+        }
+        
     }
 }
