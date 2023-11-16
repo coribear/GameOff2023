@@ -20,8 +20,8 @@ texture = ExtResource( 2 )
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
 
 [node name="StaticBody2D" parent="ParallaxLayer2" instance=ExtResource( 3 )]
-position = Vector2( 787, 184 )
+position = Vector2( 930, 179 )
 scale = Vector2( 0.1, 0.1 )
 
 [node name="Area2D" parent="ParallaxLayer2" instance=ExtResource( 4 )]
-position = Vector2( 771, 347 )
+position = Vector2( 899, 340 )

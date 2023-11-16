@@ -35,7 +35,7 @@ public class Player : BaseEntity {
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(float delta){
+    public override void _PhysicsProcess(float delta){
 
         // Natural deacceleration
         velocity.x *= 0.9F;
@@ -53,7 +53,7 @@ public class Player : BaseEntity {
         // TO-DO: Limit velocity and range of motion
         float x = this.Position.x + velocity.x * delta;
         float y = this.Position.y + velocity.y * delta;
-        this.Position = new Vector2(x,y);
+        SetPosition(x,y);
 
         this.timeSinceLastBullet += delta;
         // Shoot
