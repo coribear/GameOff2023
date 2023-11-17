@@ -54,9 +54,9 @@ public class BaseEntity : KinematicBody2D {
     }
 
     public void SetPosition(float x, float y) {
-        Vector2 newPos = new Vector2(x, y);
-        KinematicCollision2D collision = MoveAndCollide(newPos);
-        this.Position = newPos;
+        Vector2 movement = new Vector2(x, y) - this.Position;
+        KinematicCollision2D collision = MoveAndCollide(movement);
+        //this.Position = newPos;
         if (collision != null) OnCollision(collision.GetCollider());
     }
     public void OnCollision(Godot.Object body) {

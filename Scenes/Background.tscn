@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scenes/ParallaxBackground.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/ParallaxBackground.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Background.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Rock.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Enemy1.tscn" type="PackedScene" id=4]
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 script = ExtResource( 1 )
@@ -18,10 +16,3 @@ scale = Vector2( 0.37619, 0.289551 )
 texture = ExtResource( 2 )
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
-
-[node name="StaticBody2D" parent="ParallaxLayer2" instance=ExtResource( 3 )]
-position = Vector2( 930, 179 )
-scale = Vector2( 0.1, 0.1 )
-
-[node name="Area2D" parent="ParallaxLayer2" instance=ExtResource( 4 )]
-position = Vector2( 899, 340 )

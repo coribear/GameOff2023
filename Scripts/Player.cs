@@ -16,7 +16,6 @@ public class Player : BaseEntity {
     private Bullet[] bullets;
     public override void _Ready() {
         Vector2 screenSize = GetViewportRect().Size;
-        this.Position = new Vector2(screenSize.x/2.0F, screenSize.y/2.0F);
 
         Node bulletTemplate = GetNode<Bullet>("Bullet");
         // Create the bullets
