@@ -58,17 +58,7 @@ public class BaseEntity : KinematicBody2D {
         //this.Position = newPos;
         if (collision != null) OnCollision(collision.GetCollider());
     }
-    public void OnCollision(Godot.Object body) {
-        GD.Print("collision with " + body.GetType());
-        Bullet objectAsBullet = body as Bullet;
-        if (objectAsBullet == null){
-            GD.Print("-- Object was not a bullet. Self-destroying");
-            // Collisions with anything (except bullets, ironically) = death
-            GetParent().RemoveChild(this);
-            QueueFree();
-        }else{
-            GD.Print("Object was bullet");
-        }   
+    public virtual void OnCollision(Godot.Object body) {
     }
 
     public override void _PhysicsProcess(float delta){

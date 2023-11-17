@@ -32,7 +32,7 @@ public class Player : BaseEntity {
         return (PackedScene) ResourceLoader.Load(scenePath);
     }
 
-    public override void _Process(float delta){
+    public override void _Process(float delta) {
         // Accelerate if keys pressed.
         if (Input.IsActionPressed("move_right"))    velocity.x += 20;
         if (Input.IsActionPressed("move_left"))     velocity.x -= 20;
@@ -57,7 +57,6 @@ public class Player : BaseEntity {
             scaling = false;
         }
     }
-
     private bool Shoot(Bullet.BulletTypeEnum bulletType){
         int baseSize = 64; //TO-DO: Make a constant or get from sprite size
         // Find a bullet that is inactive
@@ -70,5 +69,16 @@ public class Player : BaseEntity {
             }
         }
         return false;
+    }
+
+    public override void OnCollision(Godot.Object body) {
+        GD.Print("Player collided with " + body.GetType());
+        Bullet objectAsBullet = body as Bullet;
+        if (objectAsBullet == null){
+            GD.Print("-- Object was not a bullet. Self-destroying");
+            // Collisions with anything (except bullets, ironically) = death
+            GetParent().RemoveChild(this);
+            QueueFree();
+        }   
     }
 }
