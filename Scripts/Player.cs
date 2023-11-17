@@ -33,33 +33,12 @@ public class Player : BaseEntity {
         return (PackedScene) ResourceLoader.Load(scenePath);
     }
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _PhysicsProcess(float delta){
-
-        // Natural deacceleration
-        velocity.x *= 0.9F;
-        velocity.y *= 0.9F;
-
-        if (Math.Abs(velocity.x) < 0.01) velocity.x = 0;
-        if (Math.Abs(velocity.y) < 0.01) velocity.y = 0;
-
+    public override void _Process(float delta){
         // Accelerate if keys pressed.
         if (Input.IsActionPressed("move_right"))    velocity.x += 20;
         if (Input.IsActionPressed("move_left"))     velocity.x -= 20;
         if (Input.IsActionPressed("move_up"))       velocity.y -= 20;
         if (Input.IsActionPressed("move_down"))     velocity.y += 20;
-        
-        // TO-DO: Limit velocity and range of motion
-        float x = this.Position.x + velocity.x * delta;
-        float y = this.Position.y + velocity.y * delta;
-        SetPosition(x,y);
-
-        this.timeSinceLastBullet += delta;
-        // Shoot
-        if (this.timeSinceLastBullet > this.timeBetweenBullets) {
-            if (Input.IsActionPressed("shoot_1") && Shoot(Bullet.BulletTypeEnum.GROWER) == true) this.timeSinceLastBullet = 0.0F;
-            if (Input.IsActionPressed("shoot_2") && Shoot(Bullet.BulletTypeEnum.SHRINKER) == true) this.timeSinceLastBullet = 0.0F;
-        }
 
         // Test
         if (Input.IsActionPressed("grow")) {
@@ -70,6 +49,29 @@ public class Player : BaseEntity {
             scaling = true;
         } else {
             scaling = false;
+        }
+    }
+
+//  // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _PhysicsProcess(float delta){
+
+        // Natural deacceleration
+        velocity.x *= 0.9F;
+        velocity.y *= 0.9F;
+
+        if (Math.Abs(velocity.x) < 0.01) velocity.x = 0;
+        if (Math.Abs(velocity.y) < 0.01) velocity.y = 0;
+
+        // TO-DO: Limit velocity and range of motion
+        float x = this.Position.x + velocity.x * delta;
+        float y = this.Position.y + velocity.y * delta;
+        SetPosition(x,y);
+
+        this.timeSinceLastBullet += delta;
+        // Shoot
+        if (this.timeSinceLastBullet > this.timeBetweenBullets) {
+            if (Input.IsActionPressed("shoot_1") && Shoot(Bullet.BulletTypeEnum.GROWER) == true) this.timeSinceLastBullet = 0.0F;
+            if (Input.IsActionPressed("shoot_2") && Shoot(Bullet.BulletTypeEnum.SHRINKER) == true) this.timeSinceLastBullet = 0.0F;
         }
     }
 
