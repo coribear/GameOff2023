@@ -7,9 +7,10 @@
 [node name="Stage" type="Node2D"]
 script = ExtResource( 3 )
 
-[node name="KinematicBody2D" parent="." instance=ExtResource( 1 )]
-position = Vector2( 910, 368 )
+[node name="Enemy" parent="." instance=ExtResource( 1 )]
+process_priority = 0
+position = Vector2( 1417, 377 )
 
 [node name="StaticBody2D" parent="." instance=ExtResource( 2 )]
-position = Vector2( 922, 111 )
+position = Vector2( 698, 230 )
 scale = Vector2( 0.1, 0.1 )

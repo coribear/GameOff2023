@@ -3,7 +3,7 @@ using System;
 
 public class BaseEntity : KinematicBody2D {
     const float NORMAL_SIZE = 1.0F;
-    private float currentScale = 1.0F;
+    private float setScale = 1.0F;
     protected Vector2 velocity = new Vector2(0.0F, 0.0F);
 
     [Export]
@@ -24,21 +24,19 @@ public class BaseEntity : KinematicBody2D {
         this.Scale = new Vector2(s, s);
     }
     public void Grow() {
-        if (this.currentScale < NORMAL_SIZE){
-            this.currentScale = NORMAL_SIZE;
+        if (this.setScale < NORMAL_SIZE){
+            this.setScale = NORMAL_SIZE;
         } else {
-            this.currentScale = this.growSize;
+            this.setScale = this.growSize;
         }
-        SetScale(currentScale);
     }
     
     public void Shrink() {
-        if (this.currentScale > NORMAL_SIZE){
-            this.currentScale = NORMAL_SIZE;
+        if (this.setScale > NORMAL_SIZE){
+            this.setScale = NORMAL_SIZE;
         } else {
-            this.currentScale = this.smallSize;
+            this.setScale = this.smallSize;
         }
-        SetScale(currentScale);
     }
 
 
@@ -48,21 +46,29 @@ public class BaseEntity : KinematicBody2D {
         } else {
             this.Shrink();
         }
-        // Invoke "setPosition" that checks for collisions
-        MoveTo(this.Position.x, this.Position.y);
     }
 
     public void MoveTo(float x, float y) {
         Vector2 movement = new Vector2(x, y) - this.Position;
         KinematicCollision2D collision = MoveAndCollide(movement);
-        //this.Position = newPos;
-        if (collision != null) OnCollision(collision.GetCollider());
+        if (collision != null) OnMoveCollision(collision.GetCollider());
     }
+    private void OnMoveCollision(Godot.Object body) {
+        // Collision when we move. We will invoke both the target OnCollision (if they are a BaseEntity object)
+        // and our own.
+        BaseEntity bodyAsBaseEntity = body as BaseEntity;
+        if (bodyAsBaseEntity != null) bodyAsBaseEntity.OnCollision(this);
+
+        this.OnCollision(body);
+    }
+
     public virtual void OnCollision(Godot.Object body) {
     }
 
     public override void _PhysicsProcess(float delta){
-
+        // Let's use X as reference
+        float scaleDiff = this.setScale - this.Scale.x;
+        SetScale(this.Scale.x + scaleDiff*0.1F);
         // Natural deacceleration
         velocity.x *= 0.9F;
         velocity.y *= 0.9F;

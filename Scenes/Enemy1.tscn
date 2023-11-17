@@ -16,6 +16,7 @@ animations = [ {
 } ]
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
+process_priority = 2
 z_as_relative = false
 script = ExtResource( 2 )
 __meta__ = {
