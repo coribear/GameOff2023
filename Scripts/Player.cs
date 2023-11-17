@@ -6,7 +6,6 @@ public class Player : BaseEntity {
     public int bulletPoolSize = 5;
     public float timeBetweenBullets = 0.2F;
     private Boolean scaling = false;
-    private Vector2 velocity = new Vector2(0.0F, 0.0F);
     private float timeSinceLastBullet = 0.0F;
     // Declare member variables here. Examples:
     // private int a = 2;
@@ -40,6 +39,13 @@ public class Player : BaseEntity {
         if (Input.IsActionPressed("move_up"))       velocity.y -= 20;
         if (Input.IsActionPressed("move_down"))     velocity.y += 20;
 
+        this.timeSinceLastBullet += delta;
+        // Shoot
+        if (this.timeSinceLastBullet > this.timeBetweenBullets) {
+            if (Input.IsActionPressed("shoot_1") && Shoot(Bullet.BulletTypeEnum.GROWER) == true) this.timeSinceLastBullet = 0.0F;
+            if (Input.IsActionPressed("shoot_2") && Shoot(Bullet.BulletTypeEnum.SHRINKER) == true) this.timeSinceLastBullet = 0.0F;
+        }
+
         // Test
         if (Input.IsActionPressed("grow")) {
             if (scaling == false) Grow();
@@ -49,29 +55,6 @@ public class Player : BaseEntity {
             scaling = true;
         } else {
             scaling = false;
-        }
-    }
-
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _PhysicsProcess(float delta){
-
-        // Natural deacceleration
-        velocity.x *= 0.9F;
-        velocity.y *= 0.9F;
-
-        if (Math.Abs(velocity.x) < 0.01) velocity.x = 0;
-        if (Math.Abs(velocity.y) < 0.01) velocity.y = 0;
-
-        // TO-DO: Limit velocity and range of motion
-        float x = this.Position.x + velocity.x * delta;
-        float y = this.Position.y + velocity.y * delta;
-        SetPosition(x,y);
-
-        this.timeSinceLastBullet += delta;
-        // Shoot
-        if (this.timeSinceLastBullet > this.timeBetweenBullets) {
-            if (Input.IsActionPressed("shoot_1") && Shoot(Bullet.BulletTypeEnum.GROWER) == true) this.timeSinceLastBullet = 0.0F;
-            if (Input.IsActionPressed("shoot_2") && Shoot(Bullet.BulletTypeEnum.SHRINKER) == true) this.timeSinceLastBullet = 0.0F;
         }
     }
 
