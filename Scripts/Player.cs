@@ -4,8 +4,11 @@ using System;
 public class Player : BaseEntity {
     [Export]
     public int bulletPoolSize = 5;
+    [Export]
     public float timeBetweenBullets = 0.2F;
     private Boolean scaling = false;
+    
+    private Vector2 screenSize;
     private float timeSinceLastBullet = 0.0F;
     // Declare member variables here. Examples:
     // private int a = 2;
@@ -14,7 +17,7 @@ public class Player : BaseEntity {
     // Called when the node enters the scene tree for the first time.
     private Bullet[] bullets;
     public override void _Ready() {
-        Vector2 screenSize = GetViewportRect().Size;
+        this.screenSize = GetViewportRect().Size;
 
         Node bulletTemplate = GetNode<Bullet>("Bullet");
         // Create the bullets
@@ -32,12 +35,34 @@ public class Player : BaseEntity {
         return (PackedScene) ResourceLoader.Load(scenePath);
     }
 
+    private float Clamp(float v, float min, float max){
+        if (v < min) return min;
+        if (v > max) return max;
+        return v;
+    }
+
+    private bool InRange(float v, float min, float max){
+        return (v >= min) && (v <= max);
+    }
     public override void _Process(float delta) {
         // Accelerate if keys pressed.
         if (Input.IsActionPressed("move_right"))    velocity.x += 20;
         if (Input.IsActionPressed("move_left"))     velocity.x -= 20;
         if (Input.IsActionPressed("move_up"))       velocity.y -= 20;
         if (Input.IsActionPressed("move_down"))     velocity.y += 20;
+
+        // Check movement constraints
+        Vector2 spriteSize = GetSpriteSize("AnimatedSprite");
+        Vector2 minCoords = new Vector2(spriteSize.x/2, spriteSize.y/2);
+        Vector2 maxCoords = new Vector2((this.screenSize.x - spriteSize.x/2), (this.screenSize.y - spriteSize.y/2));
+
+        if (!InRange(this.Position.x, minCoords.x, maxCoords.x) || !InRange(this.Position.y, minCoords.y, maxCoords.y)){
+            this.Position = new Vector2(
+                            Clamp(this.Position.x, minCoords.x, maxCoords.x),
+                            Clamp(this.Position.y, minCoords.y, maxCoords.y));
+            velocity.x = 0;
+            velocity.y = 0;
+        }
 
         this.timeSinceLastBullet += delta;
         // Shoot
