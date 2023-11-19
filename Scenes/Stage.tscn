@@ -9,8 +9,8 @@ script = ExtResource( 3 )
 
 [node name="Enemy" parent="." instance=ExtResource( 1 )]
 process_priority = 0
-position = Vector2( 1417, 377 )
+position = Vector2( 1106, 308 )
 
 [node name="StaticBody2D" parent="." instance=ExtResource( 2 )]
-position = Vector2( 698, 230 )
+position = Vector2( 874, 150 )
 scale = Vector2( 0.1, 0.1 )

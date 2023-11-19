@@ -48,10 +48,15 @@ public class BaseEntity : KinematicBody2D {
         }
     }
 
+    protected Vector2 GetSpriteSize(String spriteNodeName){
+        AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+        Texture tex = sprite.Frames.GetFrame(sprite.Animation, sprite.Frame);
+        return tex.GetSize();
+    }
     public void MoveTo(float x, float y) {
         Vector2 movement = new Vector2(x, y) - this.Position;
         KinematicCollision2D collision = MoveAndCollide(movement);
-        if (collision != null) OnMoveCollision(collision.GetCollider());
+        if (collision != null) OnMoveCollision(collision.Collider);
     }
     private void OnMoveCollision(Godot.Object body) {
         // Collision when we move. We will invoke both the target OnCollision (if they are a BaseEntity object)
