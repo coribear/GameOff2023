@@ -8,6 +8,7 @@ public class BaseEnemy : BaseEntity {
 
     public override void _Process(float delta) {
         if (checkIfInsideViewArea()) {
+            GD.Print("Enemy visible");
            this.hasEnteredScreen = true;
            DoMovement(delta);
         }else {
@@ -22,7 +23,6 @@ public class BaseEnemy : BaseEntity {
 
     // Must be overriden with enemy logic
     public virtual void DoMovement(float delta){
-        
     }
 
     protected bool checkIfInsideViewArea(){

@@ -2,17 +2,12 @@ using Godot;
 using System;
 
 public class BaseEntity : KinematicBody2D {
-    const float NORMAL_SIZE = 1.0F;
-    private float setScale = 1.0F;
     protected Vector2 velocity = new Vector2(0.0F, 0.0F);
-
+    protected Growable growableScale;
     [Export]
     public float growSize = 2.0F;
+    [Export]
     public float smallSize = 0.5F;
-
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready() {
-    }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
 //  public override void _Process(float delta)
@@ -22,30 +17,6 @@ public class BaseEntity : KinematicBody2D {
 
     private void SetScale(float s){
         this.Scale = new Vector2(s, s);
-    }
-    public void Grow() {
-        if (this.setScale < NORMAL_SIZE){
-            this.setScale = NORMAL_SIZE;
-        } else {
-            this.setScale = this.growSize;
-        }
-    }
-    
-    public void Shrink() {
-        if (this.setScale > NORMAL_SIZE){
-            this.setScale = NORMAL_SIZE;
-        } else {
-            this.setScale = this.smallSize;
-        }
-    }
-
-
-    public void GotHitByBullet(Bullet bullet){
-        if (bullet.GetBulletType() == Bullet.BulletTypeEnum.GROWER) {
-            this.Grow();
-        } else {
-            this.Shrink();
-        }
     }
 
     protected Vector2 GetSpriteSize(String spriteNodeName){
@@ -70,9 +41,23 @@ public class BaseEntity : KinematicBody2D {
     public virtual void OnCollision(Godot.Object body) {
     }
 
+    public Growable GetGrowableScale(){
+        return this.growableScale;
+    }
+
+    private void CreateGrowableWithCurrentSettings(){
+        this.growableScale = new Growable(smallSize, this.Scale.x, growSize);
+    }
+
     public override void _PhysicsProcess(float delta){
+        // Nothing to do if we still don't have an instance of our growth tracker.
+        // This should be done at _Ready, but for some reason it wasn't being called
+        // for BaseEntity, so we are forced to create the instance of Growable here
+        // if it doesn't exist
+        if (this.growableScale == null) CreateGrowableWithCurrentSettings();
+    
         // Let's use X as reference
-        float scaleDiff = this.setScale - this.Scale.x;
+        float scaleDiff = this.growableScale.GetScale() - this.Scale.x;
         SetScale(this.Scale.x + scaleDiff*0.1F);
         // Natural deacceleration
         velocity.x *= 0.9F;

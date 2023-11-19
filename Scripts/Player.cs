@@ -45,17 +45,6 @@ public class Player : BaseEntity {
             if (Input.IsActionPressed("shoot_1") && Shoot(Bullet.BulletTypeEnum.GROWER) == true) this.timeSinceLastBullet = 0.0F;
             if (Input.IsActionPressed("shoot_2") && Shoot(Bullet.BulletTypeEnum.SHRINKER) == true) this.timeSinceLastBullet = 0.0F;
         }
-
-        // Test
-        if (Input.IsActionPressed("grow")) {
-            if (scaling == false) Grow();
-            scaling = true;
-        }else if (Input.IsActionPressed("shrink")) {
-            if (scaling == false) Shrink();
-            scaling = true;
-        } else {
-            scaling = false;
-        }
     }
     private bool Shoot(Bullet.BulletTypeEnum bulletType){
         int baseSize = 64; //TO-DO: Make a constant or get from sprite size
