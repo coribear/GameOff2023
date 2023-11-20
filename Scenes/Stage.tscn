@@ -13,12 +13,47 @@ script = ExtResource( 3 )
 process_priority = 0
 position = Vector2( 1190, 180 )
 
-[node name="StaticBody2D" parent="." instance=ExtResource( 2 )]
-position = Vector2( 774, 266 )
+[node name="Enemy2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2561, 224 )
+
+[node name="smallrock2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 781, 277 )
 scale = Vector2( 0.05, 0.05 )
 script = ExtResource( 4 )
 growSize = 0.1
 smallSize = 0.025
 
-[node name="Enemy2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1290, 416 )
+[node name="smallrock" parent="." instance=ExtResource( 2 )]
+position = Vector2( 2340, 357 )
+scale = Vector2( 0.05, 0.05 )
+script = ExtResource( 4 )
+growSize = 0.1
+smallSize = 0.025
+
+[node name="bigrock" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1618, 38 )
+scale = Vector2( 0.1, 0.1 )
+script = ExtResource( 4 )
+growSize = 0.2
+smallSize = 0.05
+
+[node name="bigrock2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1613, 212 )
+scale = Vector2( 0.1, 0.1 )
+script = ExtResource( 4 )
+growSize = 0.2
+smallSize = 0.05
+
+[node name="bigrock3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1618, 396 )
+scale = Vector2( 0.1, 0.1 )
+script = ExtResource( 4 )
+growSize = 0.2
+smallSize = 0.05
+
+[node name="bigrock4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1613, 577 )
+scale = Vector2( 0.1, 0.1 )
+script = ExtResource( 4 )
+growSize = 0.2
+smallSize = 0.05
