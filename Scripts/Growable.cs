@@ -8,11 +8,18 @@ public class Growable {
 
     private float setScale;
 
+    public enum ScaleSetting {
+        NORMAL,
+        SMALL,
+        BIG
+    };
+
     public Growable(){
         // Defaults
         SetSizes(0.5F, 1.0F, 2.0F);
         SetScale(this.normalSize);
     }
+    
     public Growable(float smallSize, float normalSize, float bigSize){
         SetSizes(smallSize, normalSize, bigSize);
         SetScale(normalSize);
@@ -26,6 +33,11 @@ public class Growable {
         return this.setScale;
     }
 
+    public ScaleSetting GetCurrentScaleSetting(){
+        if (this.setScale < normalSize) return ScaleSetting.SMALL;
+        if (this.setScale > normalSize) return ScaleSetting.BIG;
+        return ScaleSetting.NORMAL;
+    }
     public void SetSizes(float smallSize, float normalSize, float bigSize){
         this.smallSize = smallSize;
         this.normalSize = normalSize;
@@ -33,15 +45,15 @@ public class Growable {
     }
 
     public void Grow() {
-        if (this.setScale < normalSize){
+        if (GetCurrentScaleSetting() == ScaleSetting.SMALL){
             this.setScale = normalSize;
         } else {
             this.setScale = this.bigSize;
         }
     }
-    
+
     public void Shrink() {
-        if (this.setScale > normalSize){
+        if (GetCurrentScaleSetting() == ScaleSetting.BIG){
             this.setScale = normalSize;
         } else {
             this.setScale = this.smallSize;

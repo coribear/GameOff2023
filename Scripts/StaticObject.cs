@@ -2,16 +2,18 @@ using Godot;
 using System;
 
 public class StaticObject : StaticBody2D {
+    private static float GRAVITY = 150.0F;
+    private static float GROW_SPEED = 3.0F;
     private Growable growableScale;
     [Export]
     public float growSize;
     [Export]
     public float smallSize;
-    
-    // For some reason _Ready works with this static object even when it doesn't with our BaseEntity
-    public override void _Ready() {
-        this.growableScale = new Growable(smallSize, this.Scale.x, growSize);
-    }
+
+    [Export]
+    public bool applyGravity = false;
+    private Vector2 curSpeed = new Vector2(0, 0); // This object doesn't move on its own,
+                                                  // but it's affected by gravity
 
     public Growable GetGrowableScale(){
         return this.growableScale;
@@ -21,12 +23,22 @@ public class StaticObject : StaticBody2D {
         this.Scale = new Vector2(s, s);
     }
 
+    private void CreateGrowableWithCurrentSettings(){
+        this.growableScale = new Growable(smallSize, this.Scale.x, growSize);
+    }
     public override void _Process(float delta){
-        // Nothing to do if we still don't have an instance of our growth tracker
-        if (this.growableScale == null) return;
+        if (this.growableScale == null) CreateGrowableWithCurrentSettings();
 
         // Keep track of our growable object reference
         float scaleDiff = this.growableScale.GetScale() - this.Scale.x;
-        SetScale(this.Scale.x + scaleDiff*0.1F);
+        SetScale(this.Scale.x + scaleDiff*delta*GROW_SPEED);
+
+        if (this.applyGravity){
+            this.curSpeed.y += GRAVITY*delta;
+        }
+        Vector2 newPos = this.Position;
+        newPos.y += this.curSpeed.y*delta;
+        newPos.x += this.curSpeed.x*delta;
+        this.Position = newPos;
     }
 }

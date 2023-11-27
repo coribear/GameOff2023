@@ -2,6 +2,7 @@ using Godot;
 using System;
 
 public class BaseEntity : KinematicBody2D {
+    private static float GROW_SPEED = 3.0F;
     protected Vector2 velocity = new Vector2(0.0F, 0.0F);
     protected Growable growableScale;
     [Export]
@@ -58,7 +59,7 @@ public class BaseEntity : KinematicBody2D {
     
         // Let's use X as reference
         float scaleDiff = this.growableScale.GetScale() - this.Scale.x;
-        SetScale(this.Scale.x + scaleDiff*0.1F);
+        SetScale(this.Scale.x + scaleDiff*delta*GROW_SPEED);
         // Natural deacceleration
         velocity.x *= 0.9F;
         velocity.y *= 0.9F;

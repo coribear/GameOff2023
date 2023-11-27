@@ -62,10 +62,10 @@ public class Bullet : Area2D {
             // Try to cast it as a BaseEntity
             BaseEntity bodyAsEntity = body as BaseEntity;
             StaticObject bodyAsStatic = body as StaticObject;
-            if (bodyAsEntity != null){
+            if (bodyAsEntity != null && bodyAsEntity.GetGrowableScale() != null){
                 GD.Print("Invoking hit event of [BaseEntity]");
                 bodyAsEntity.GetGrowableScale().GotHitByBullet(this);
-            }else if (bodyAsStatic != null){
+            }else if (bodyAsStatic != null && bodyAsStatic.GetGrowableScale() != null){
                 GD.Print("Invoking hit event of [StaticObject]");
                 bodyAsStatic.GetGrowableScale().GotHitByBullet(this);
             }
